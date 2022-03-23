@@ -27,18 +27,27 @@ def Abrirarchivo():
 
 def abrirform():
 
-    root.withdraw()
+    
     regiForm.deiconify()
 
    
 
 def AgregarReserva():
-
-    
+       
+        global count
+        
         if nameE.get() == "" or carE.get() == "" or modelE.get() == "":
     
             messagebox.showinfo(message="Por favor rellene todos los campos", title="Error")
-    
+
+        else:
+            info.insert(parent='',index='end', iid=count, text="", values=(nameE.get(), carE.get(), modelE.get()))
+             
+            count += 1
+
+            nameE.delete(0,END)
+            carE.delete(0,END)
+            modelE.delete(0,END)
 
 root = Tk()
 
@@ -53,12 +62,9 @@ root.title("Parking System")
 menubar = Menu(root)
 root.config(menu=menubar)
 
-reserverNames = []
-reserverCars = []
-reserverModels = []
+global count
 
-
-
+count = 0
 
 filemenu = Menu(menubar, tearoff=0)
 filemenu.add_command(label="Nuevo")
