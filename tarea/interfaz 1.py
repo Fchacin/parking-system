@@ -26,7 +26,7 @@ def Abrirarchivo():
     print(archivo)
 
 def abrirform():
-
+    
     
     regiForm.deiconify()
 
@@ -48,6 +48,8 @@ def AgregarReserva():
             nameE.delete(0,END)
             carE.delete(0,END)
             modelE.delete(0,END)
+
+            
 
 root = Tk()
 
