@@ -29,7 +29,13 @@ def abrirform():
     
     regiForm.deiconify()
 
-   
+
+def salirdelform():
+    revalor=messagebox.askquestion("Salir", "¿Desea salir de la aplicacion?") 
+    if revalor=="yes":
+       regiForm.withdraw()
+    else:
+        regiForm.deiconify()
 
 def AgregarReserva():
        
@@ -126,28 +132,44 @@ info.pack()
 
 regiForm = tk.Toplevel()
 regiForm.geometry("500x500")
+regiForm.attributes('-fullscreen', True)
 regiForm.withdraw()
+
+regimenubar = Menu(regiForm)
+regiForm.config(menu=regimenubar)
+
+global rescount
+
+rescount = 0
+
+operamenu = Menu(regimenubar, tearoff=0)
+operamenu.add_command(label="Limpiar")
+operamenu.add_command(label="Salir", command=salirdelform)
+
+
+regimenubar.add_cascade(label="Menu", menu=operamenu)
+
     
-label_0 =Label(regiForm,text="Formulario de Reserva", width=20,font=("bold",20))
-label_0.place(x=90,y=60)
+label_0 =Label(regiForm,text="Formulario de Reserva", width=25,font=("bold",20))
+label_0.place(x=500,y=60)
     
 name = Label(regiForm ,text = "Nombre y Apellido", width=20,font=("bold",10))
-name.place(x=80,y=130)
+name.place(x=240,y=137)
 car = Label(regiForm ,text = "Auto", width=20,font=("bold",10))
-car.place(x= 80,y=180)
+car.place(x= 490,y=137)
     
 model = Label(regiForm ,text = "Modelo",  width=20,font=("bold",10))
-model.place(x=80,y=220)
+model.place(x=750,y=137)
    
 nameE = Entry(regiForm)
-nameE.place(x=240,y=130)
+nameE.place(x=390,y=140)
 carE = Entry(regiForm)
-carE.place(x=240,y=180)   
+carE.place(x=620,y=140)   
 modelE = Entry(regiForm)
-modelE.place(x=240,y=220)
+modelE.place(x=890,y=140)
 tempname = nameE.get()
 
-btnReserva = Button(regiForm, text='Reservar' ,width=20,bg="black",fg='white', command=AgregarReserva)
-btnReserva.place(x=180,y=380)
+btnReserva = Button(regiForm, text='Reservar' ,width=20,bg="dark blue",fg='white', command=AgregarReserva)
+btnReserva.place(x=580,y=380)
 
 root.mainloop()
