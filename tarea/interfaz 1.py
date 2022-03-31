@@ -44,6 +44,8 @@ def AgregarReserva():
         if nameE.get() == "" or carE.get() == "" or modelE.get() == "":
     
             messagebox.showinfo(message="Por favor rellene todos los campos", title="Error")
+            regiForm.deiconify()
+            
 
         else:
             info.insert(parent='',index='end', iid=count, text="", values=(nameE.get(), carE.get(), modelE.get()))
@@ -154,21 +156,41 @@ regimenubar.add_cascade(label="Menu", menu=operamenu)
 label_0 =Label(regiForm,text="Formulario de Reserva", width=25,font=("bold",20))
 label_0.place(x=500,y=60)
     
-name = Label(regiForm ,text = "Nombre y Apellido", width=20,font=("bold",10))
-name.place(x=240,y=137)
-car = Label(regiForm ,text = "Auto", width=20,font=("bold",10))
-car.place(x= 490,y=137)
+Id = Label(regiForm ,text = "Cedula", width=20,font=("bold",10))
+Id.place(x=240,y=137)
+
+name = Label(regiForm ,text = "Nombre", width=20,font=("bold",10))
+name.place(x= 490,y=137)
     
+mail = Label(regiForm ,text = "Correo",  width=20,font=("bold",10))
+mail.place(x=750,y=137)
+
+model = Label(regiForm ,text = "Marca",  width=20,font=("bold",10))
+model.place(x=240,y=197)
+
 model = Label(regiForm ,text = "Modelo",  width=20,font=("bold",10))
-model.place(x=750,y=137)
+model.place(x=490,y=197)
+
+model = Label(regiForm ,text = "Color",  width=20,font=("bold",10))
+model.place(x=750,y=197)
+
+model = Label(regiForm ,text = "Año",  width=20,font=("bold",10))
+model.place(x=240,y=257)
+
+model = Label(regiForm ,text = "Placa",  width=20,font=("bold",10))
+model.place(x=490,y=257)
+
+model = Label(regiForm ,text = "Puesto",  width=20,font=("bold",10))
+model.place(x=750,y=257)
    
+   
+IdE = Entry(regiForm)
+IdE.place(x=390,y=140)
 nameE = Entry(regiForm)
-nameE.place(x=390,y=140)
-carE = Entry(regiForm)
-carE.place(x=620,y=140)   
-modelE = Entry(regiForm)
-modelE.place(x=890,y=140)
-tempname = nameE.get()
+nameE.place(x=620,y=140)   
+mailE = Entry(regiForm)
+mailE.place(x=890,y=140)
+
 
 btnReserva = Button(regiForm, text='Reservar' ,width=20,bg="dark blue",fg='white', command=AgregarReserva)
 btnReserva.place(x=580,y=380)
