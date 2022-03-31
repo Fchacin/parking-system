@@ -53,6 +53,7 @@ def AgregarReserva():
             nameE.delete(0,END)
             carE.delete(0,END)
             modelE.delete(0,END)
+            regiForm.withdraw()
 
             
 
