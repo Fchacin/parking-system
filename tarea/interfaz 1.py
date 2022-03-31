@@ -27,7 +27,6 @@ def Abrirarchivo():
 
 def abrirform():
     
-    
     regiForm.deiconify()
 
    
@@ -53,13 +52,15 @@ def AgregarReserva():
 
 root = Tk()
 
-root.geometry("800x600")
+root.geometry("800x800")
 
 root.iconbitmap("volante.ico")
 
 root.config(bg="silver")
 
 root.title("Parking System")
+
+root.attributes('-fullscreen', True)
 
 menubar = Menu(root)
 root.config(menu=menubar)
@@ -86,26 +87,42 @@ helpmenu.add_command(label="Nosotros", command=InfoEquipo)
 helpmenu.add_separator()
 helpmenu.add_command(label="Acerca de...", command=InfoAdicional)
 
+resmenu = Menu(menubar, tearoff=0)
+resmenu.add_command(label="Añadir Reserva", command=abrirform)
+resmenu.add_command(label="Eliminar Reserva", command=Abrirarchivo)
+resmenu.add_command(label="Modificar Reserva")
+
 menubar.add_cascade(label="Archivo", menu=filemenu)
 menubar.add_cascade(label="Editar", menu=editmenu)
 menubar.add_cascade(label="Ayuda", menu=helpmenu)
+menubar.add_cascade(label="Reservas", menu=resmenu)
 
-info = ttk.Treeview(root)
-info["columns"]=("Nombre y Apellido","Auto","Modelo")
+
+
+info = ttk.Treeview(root,show='headings', height=20)
+info["columns"]=("Cedula","Nombre y Apellido","Correo Electronico","Auto","Modelo","Color","Año","Placa","Puesto")
 info.column("#0", width=0, stretch=NO)
+info.column("Cedula", anchor=CENTER, width=80)
 info.column("Nombre y Apellido", anchor=CENTER, width=180)
+info.column("Correo Electronico", anchor=CENTER, width=180)
 info.column("Auto", anchor=CENTER, width=80)
 info.column("Modelo", anchor=CENTER, width=80)
+info.column("Color", anchor=CENTER, width=80)
+info.column("Año", anchor=CENTER, width=80)
+info.column("Placa", anchor=CENTER, width=80)
+info.column("Puesto", anchor=CENTER, width=80)
 
 info.heading("#0", text="", anchor=CENTER)
+info.heading("Cedula", text="Cedula", anchor=CENTER)
 info.heading("Nombre y Apellido", text="Nombre y Apellido", anchor=CENTER)
+info.heading("Correo Electronico", text="Correo Electronico", anchor=CENTER)
 info.heading("Auto", text="Auto", anchor=CENTER)
 info.heading("Modelo", text="Modelo", anchor=CENTER)
+info.heading("Color", text="Color", anchor=CENTER)
+info.heading("Año", text="Año", anchor=CENTER)
+info.heading("Placa", text="Placa", anchor=CENTER)
+info.heading("Puesto", text="Puesto", anchor=CENTER)
 info.pack()
-
-addbtn = ttk.Button(root ,text="Reservar estacionamiento", command=abrirform)
-
-addbtn.place(x=340,y=175)
 
 regiForm = tk.Toplevel()
 regiForm.geometry("500x500")
