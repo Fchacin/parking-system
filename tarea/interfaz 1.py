@@ -109,12 +109,12 @@ menubar.add_cascade(label="Reservas", menu=resmenu)
 
 
 info = ttk.Treeview(root,show='headings', height=20)
-info["columns"]=("Cedula","Nombre y Apellido","Correo Electronico","Auto","Modelo","Color","Año","Placa","Puesto")
+info["columns"]=("Cedula","Nombre y Apellido","Correo Electronico","Marca","Modelo","Color","Año","Placa","Puesto")
 info.column("#0", width=0, stretch=NO)
 info.column("Cedula", anchor=CENTER, width=80)
 info.column("Nombre y Apellido", anchor=CENTER, width=180)
 info.column("Correo Electronico", anchor=CENTER, width=180)
-info.column("Auto", anchor=CENTER, width=80)
+info.column("Marca", anchor=CENTER, width=80)
 info.column("Modelo", anchor=CENTER, width=80)
 info.column("Color", anchor=CENTER, width=80)
 info.column("Año", anchor=CENTER, width=80)
@@ -125,7 +125,7 @@ info.heading("#0", text="", anchor=CENTER)
 info.heading("Cedula", text="Cedula", anchor=CENTER)
 info.heading("Nombre y Apellido", text="Nombre y Apellido", anchor=CENTER)
 info.heading("Correo Electronico", text="Correo Electronico", anchor=CENTER)
-info.heading("Auto", text="Auto", anchor=CENTER)
+info.heading("Marca", text="Marca", anchor=CENTER)
 info.heading("Modelo", text="Modelo", anchor=CENTER)
 info.heading("Color", text="Color", anchor=CENTER)
 info.heading("Año", text="Año", anchor=CENTER)
@@ -171,17 +171,17 @@ model.place(x=240,y=197)
 model = Label(regiForm ,text = "Modelo",  width=20,font=("bold",10))
 model.place(x=490,y=197)
 
-model = Label(regiForm ,text = "Color",  width=20,font=("bold",10))
-model.place(x=750,y=197)
+color = Label(regiForm ,text = "Color",  width=20,font=("bold",10))
+color.place(x=750,y=197)
 
-model = Label(regiForm ,text = "Año",  width=20,font=("bold",10))
-model.place(x=240,y=257)
+year = Label(regiForm ,text = "Año",  width=20,font=("bold",10))
+year.place(x=240,y=257)
 
-model = Label(regiForm ,text = "Placa",  width=20,font=("bold",10))
-model.place(x=490,y=257)
+carid = Label(regiForm ,text = "Placa",  width=20,font=("bold",10))
+carid.place(x=490,y=257)
 
-model = Label(regiForm ,text = "Puesto",  width=20,font=("bold",10))
-model.place(x=750,y=257)
+carplace = Label(regiForm ,text = "Puesto",  width=20,font=("bold",10))
+carplace.place(x=750,y=257)
    
    
 IdE = Entry(regiForm)
@@ -190,9 +190,33 @@ nameE = Entry(regiForm)
 nameE.place(x=620,y=140)   
 mailE = Entry(regiForm)
 mailE.place(x=890,y=140)
+BrandBox = ttk.Combobox(regiForm,
+                        state="readonly",
+                        values=["Ford","Toyota","Chevrolet","Jeep","Mercedes-Benz","Ferrari","BMW","Lamborghini","Volkswagen","Nissan"])
+BrandBox.place(x=390, y=197)
+
+ModelE = Entry(regiForm)
+ModelE.place(x=620,y=197)
+
+ColorBox = ttk.Combobox(regiForm,
+                        state="readonly",
+                        values=["Rojo","Beige","Gris","Azul","Verde","Morado","Rosado","Blanco","Negro","Marron","Celeste","Amarillo","Naranja","Plateado","Dorado"])
+ColorBox.place(x=890, y=197)
+
+yearE = Entry(regiForm)
+yearE.place(x=390,y=257)
+caridE = Entry(regiForm)
+caridE.place(x=620,y=257)
+
+positBox = ttk.Combobox(regiForm,
+                        state="readonly",
+                        values=["A1","A2","A3","A4","A5","A6","B1","B2","B3","B4","B5","B6","C1","C2","C3"])
+positBox.place(x=890, y=257)
 
 
 btnReserva = Button(regiForm, text='Reservar' ,width=20,bg="dark blue",fg='white', command=AgregarReserva)
 btnReserva.place(x=580,y=380)
+
+
 
 root.mainloop()
