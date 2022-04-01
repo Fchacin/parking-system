@@ -14,7 +14,8 @@ def InfoEquipo():
 def salirdelapp():
     valor=messagebox.askquestion("Salir", "¿Desea salir de la aplicacion?") 
     if valor=="yes":
-       root.destroy() 
+       root.destroy()
+
 
 def Abrirarchivo():
     archivo=filedialog.askopenfilename(filetypes=(
@@ -40,25 +41,49 @@ def salirdelform():
 def AgregarReserva():
        
         global count
+
         
-        if nameE.get() == "" or carE.get() == "" or modelE.get() == "":
+        if nameE.get() == "" or ModelE.get() == "" or idE.get() == "" or mailE.get() == "" or BrandBox.get() == "" or ColorBox.get() == "" or yearE.get() == "" or caridE.get() == "" or positBox.get() == "":
     
             messagebox.showinfo(message="Por favor rellene todos los campos", title="Error")
             regiForm.deiconify()
             
+        elif int(yearE.get()) < 1884 or int(yearE.get()) > 2022 :
 
+             messagebox.showinfo(message="Usted ha introducido un año invalido", title="Error")
+             regiForm.deiconify()
+        
         else:
-            info.insert(parent='',index='end', iid=count, text="", values=(nameE.get(), carE.get(), modelE.get()))
+            info.insert(parent='',index='end', iid=count, text="", values=(idE.get(), nameE.get(), mailE.get(), BrandBox.get(), ModelE.get(),ColorBox.get(),
+            yearE.get(),caridE.get(),positBox.get()))
              
             count += 1
 
             nameE.delete(0,END)
-            carE.delete(0,END)
-            modelE.delete(0,END)
+            mailE.delete(0,END)
+            ModelE.delete(0,END)
+            idE.delete(0,END)
+            BrandBox.delete(0,END)
+            ColorBox.delete(0,END)
+            yearE.delete(0,END)
+            caridE.delete(0,END)
+            positBox.delete(0,END)
             regiForm.withdraw()
 
-            
 
+def validateints():
+    try:
+        int(idE.get())
+        int(yearE.get())
+        
+        AgregarReserva()
+        
+    except ValueError:
+        messagebox.showinfo(message="Solo debe ingresar numeros en año y cedula", title="Error")
+        regiForm.deiconify()
+        
+        
+    
 root = Tk()
 
 root.geometry("800x800")
@@ -184,8 +209,8 @@ carplace = Label(regiForm ,text = "Puesto",  width=20,font=("bold",10))
 carplace.place(x=750,y=257)
    
    
-IdE = Entry(regiForm)
-IdE.place(x=390,y=140)
+idE = Entry(regiForm)
+idE.place(x=390,y=140)
 nameE = Entry(regiForm)
 nameE.place(x=620,y=140)   
 mailE = Entry(regiForm)
@@ -214,7 +239,7 @@ positBox = ttk.Combobox(regiForm,
 positBox.place(x=890, y=257)
 
 
-btnReserva = Button(regiForm, text='Reservar' ,width=20,bg="dark blue",fg='white', command=AgregarReserva)
+btnReserva = Button(regiForm, text='Reservar' ,width=20,bg="dark blue",fg='white', command=validateints)
 btnReserva.place(x=580,y=380)
 
 
