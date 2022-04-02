@@ -41,6 +41,7 @@ def salirdelform():
 def AgregarReserva():
        
         global count
+        
 
         
         if nameE.get() == "" or ModelE.get() == "" or idE.get() == "" or mailE.get() == "" or BrandBox.get() == "" or ColorBox.get() == "" or yearE.get() == "" or caridE.get() == "" or positBox.get() == "":
@@ -52,7 +53,7 @@ def AgregarReserva():
 
              messagebox.showinfo(message="Usted ha introducido un año invalido", title="Error")
              regiForm.deiconify()
-        
+            
         else:
             info.insert(parent='',index='end', iid=count, text="", values=(idE.get(), nameE.get(), mailE.get(), BrandBox.get(), ModelE.get(),ColorBox.get(),
             yearE.get(),caridE.get(),positBox.get()))
