@@ -4,6 +4,35 @@ from tkinter import messagebox
 from tkinter import filedialog
 import tkinter as tk
 import array as ar
+import sqlite3
+
+
+
+
+def query_database():
+
+    global count
+
+    count = 0
+    
+    conne = sqlite3.connect('parkingdatabase.db')
+
+    c = conne.cursor()
+
+    c.execute("SELECT * FROM Reserves")
+
+    records = c.fetchall()
+
+    for record in records:
+        info.insert(parent='',index='end', iid=count, text="", values=(record[0], record[1], record[2], record[3], record[4],record[5],record[6],record[7],record[8]))
+
+        count += 1
+
+        
+
+    conne.commit()
+
+    conne.close()
 
 def InfoAdicional():
     messagebox.showinfo("Acerca de nuestro proyecto","Nuestro proyecto esta desarrollado mediante software libre, no infrige derechos de autor ni copyright")
@@ -38,10 +67,43 @@ def salirdelform():
     else:
         regiForm.deiconify()
 
+
+
+def validarposicion():
+    
+
+    tempost = positBox.get()
+
+    posvalid = False
+    
+    for child in info.get_children():
+        if tempost in info.item(child)['values']:
+
+            messagebox.showinfo(message="Puesto ocupado", title="Error")
+            posvalid = True
+
+            
+
+    if posvalid == True:
+
+        regiForm.deiconify()
+
+    else:
+
+        
+        AgregarReserva()
+            
+
+        
+
+            
+    
+
 def AgregarReserva():
        
-        global count
-        
+        conne = sqlite3.connect('parkingdatabase.db')
+
+        c = conne.cursor()
 
         
         if nameE.get() == "" or ModelE.get() == "" or idE.get() == "" or mailE.get() == "" or BrandBox.get() == "" or ColorBox.get() == "" or yearE.get() == "" or caridE.get() == "" or positBox.get() == "":
@@ -53,22 +115,48 @@ def AgregarReserva():
 
              messagebox.showinfo(message="Usted ha introducido un año invalido", title="Error")
              regiForm.deiconify()
+
+
             
         else:
-            info.insert(parent='',index='end', iid=count, text="", values=(idE.get(), nameE.get(), mailE.get(), BrandBox.get(), ModelE.get(),ColorBox.get(),
-            yearE.get(),caridE.get(),positBox.get()))
-             
-            count += 1
 
+            c.execute("INSERT INTO Reserves VALUES(:id, :name, :mail, :brand, :model, :color, :year, :carid, :posit)",
+                      {
+                          'id': idE.get(),
+                          'name': nameE.get(),
+                          'mail': mailE.get(),
+                          'brand': BrandBox.get(),
+                          'model': ModelE.get(),
+                          'color': ColorBox.get(),
+                          'year': yearE.get(),
+                          'carid': caridE.get(),
+                          'posit': positBox.get(),
+                        
+
+                      })
+             
+        
+            conne.commit()
+
+            conne.close()
+            
             nameE.delete(0,END)
             mailE.delete(0,END)
             ModelE.delete(0,END)
             idE.delete(0,END)
-            BrandBox.delete(0,END)
-            ColorBox.delete(0,END)
+            BrandBox.set('')
+            ColorBox.set('')
             yearE.delete(0,END)
             caridE.delete(0,END)
-            positBox.delete(0,END)
+            positBox.set('')
+            
+
+            #Refresscar lista
+
+            info.delete(*info.get_children())
+
+            query_database()
+
             regiForm.withdraw()
 
 
@@ -77,12 +165,13 @@ def validateints():
         int(idE.get())
         int(yearE.get())
         
-        AgregarReserva()
+        validarposicion()
         
     except ValueError:
         messagebox.showinfo(message="Solo debe ingresar numeros en año y cedula", title="Error")
         regiForm.deiconify()
         
+
         
     
 root = Tk()
@@ -100,9 +189,8 @@ root.attributes('-fullscreen', True)
 menubar = Menu(root)
 root.config(menu=menubar)
 
-global count
 
-count = 0
+
 
 filemenu = Menu(menubar, tearoff=0)
 filemenu.add_command(label="Nuevo")
@@ -243,6 +331,6 @@ positBox.place(x=890, y=257)
 btnReserva = Button(regiForm, text='Reservar' ,width=20,bg="dark blue",fg='white', command=validateints)
 btnReserva.place(x=580,y=380)
 
-
+query_database()
 
 root.mainloop()
