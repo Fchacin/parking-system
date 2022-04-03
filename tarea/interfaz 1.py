@@ -79,7 +79,7 @@ def validarposicion():
     for child in info.get_children():
         if tempost in info.item(child)['values']:
 
-            messagebox.showinfo(message="Puesto ocupado", title="Error")
+            messagebox.showinfo(message="Puesto ocupado, Porfavor seleccione otro puesto o espere su liberacion.", title="Error")
             posvalid = True
 
             
@@ -172,6 +172,33 @@ def validateints():
         regiForm.deiconify()
         
 
+def eliminarreserva():
+
+    conne = sqlite3.connect('parkingdatabase.db')
+
+    c = conne.cursor()
+
+    
+    selected = info.focus()
+    
+    values = info.item(selected, 'values')
+
+    delid = values[0]
+
+    c.execute("DELETE from Reserves WHERE oid=" + values[0])
+
+    conne.commit()
+
+    conne.close()
+
+    messagebox.showinfo(message="Ha eliminado la reserva de la persona con C.I" + values[0] , title="Error")
+
+    info.delete(*info.get_children())
+    
+    query_database()
+    
+    
+
         
     
 root = Tk()
@@ -193,17 +220,9 @@ root.config(menu=menubar)
 
 
 filemenu = Menu(menubar, tearoff=0)
-filemenu.add_command(label="Nuevo")
-filemenu.add_command(label="Abrir documento", command=Abrirarchivo)
-filemenu.add_command(label="Guardar")
-filemenu.add_command(label="Cerrar")
-filemenu.add_separator()
 filemenu.add_command(label="Salir", command=salirdelapp)
 
-editmenu = Menu(menubar, tearoff=0)
-editmenu.add_command(label="Cortar")
-editmenu.add_command(label="Copiar")
-editmenu.add_command(label="Pegar")
+
 
 helpmenu = Menu(menubar, tearoff=0)
 helpmenu.add_command(label="Nosotros", command=InfoEquipo)
@@ -212,11 +231,10 @@ helpmenu.add_command(label="Acerca de...", command=InfoAdicional)
 
 resmenu = Menu(menubar, tearoff=0)
 resmenu.add_command(label="Añadir Reserva", command=abrirform)
-resmenu.add_command(label="Eliminar Reserva", command=Abrirarchivo)
-resmenu.add_command(label="Modificar Reserva")
+resmenu.add_command(label="Eliminar Reserva", command=eliminarreserva)
+
 
 menubar.add_cascade(label="Archivo", menu=filemenu)
-menubar.add_cascade(label="Editar", menu=editmenu)
 menubar.add_cascade(label="Ayuda", menu=helpmenu)
 menubar.add_cascade(label="Reservas", menu=resmenu)
 
@@ -254,6 +272,7 @@ regiForm.withdraw()
 
 regimenubar = Menu(regiForm)
 regiForm.config(menu=regimenubar)
+regiForm.iconbitmap("volante.ico")
 
 global rescount
 
